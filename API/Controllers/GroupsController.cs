@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using API.Data;
 using API.DTOs;
 using API.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,12 +20,14 @@ namespace API.Controllers
         }
 
         [HttpGet("Groups")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<AppGroup>>> GetGroups()
         {
             return Ok( await _context.Groups.ToListAsync());
         }
 
         [HttpGet("GroupsMembership/{userName}")]
+        [Authorize]
         public async Task<ActionResult<UserMembershipDto>> GetGroupsMembership(string userName)
         {
             var exist = await _context.Users.AnyAsync( x => x.UserName == userName.ToLower());
@@ -42,6 +45,7 @@ namespace API.Controllers
         }
 
         [HttpPost("AddMembership")]
+        [Authorize]
         public async Task<ActionResult<UserMembershipDto>> AddMembership(UserMembershipModifyDto userDto)
         {
             var exist = await _context.Users.AnyAsync( x => x.UserName == userDto.UserName.ToLower());
@@ -72,6 +76,7 @@ namespace API.Controllers
         }
 
          [HttpPost("RemoveMembership")]
+         [Authorize]
         public async Task<ActionResult<UserMembershipDto>> RemoveMembership(UserMembershipModifyDto userDto)
         {
             var exist = await _context.Users.AnyAsync( x => x.UserName == userDto.UserName.ToLower());

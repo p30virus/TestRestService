@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using API.Data;
 using API.DTOs;
 using API.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,12 +20,14 @@ namespace API.Controllers
         }
 
         [HttpGet("Users")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
         {
             return Ok( await _context.Users.ToListAsync());
         }
 
         [HttpPost("Register")]
+        [Authorize]
         public async Task<ActionResult<AppUser>> CreateUser(RegisterUserDto userDto)
         {
             var exist = await _context.Users.AnyAsync( x => x.UserName == userDto.UserName.ToLower() );
@@ -46,6 +49,7 @@ namespace API.Controllers
         }
 
         [HttpPost("Update")]
+        [Authorize]
         public async Task<ActionResult<AppUser>> UpdateUser(UpdateUserDto userDto)
         {
             var exist = await _context.Users.AnyAsync( x => x.UserName == userDto.UserName.ToLower() );
@@ -62,6 +66,7 @@ namespace API.Controllers
         }
 
         [HttpPost("ChangePassword")]
+        [Authorize]
         public async Task<ActionResult<AppUser>> ChangePassword(ChangePasswrdDto userDto)
         {
             var exist = await _context.Users.AnyAsync( x => x.UserName == userDto.UserName.ToLower() );
@@ -70,6 +75,7 @@ namespace API.Controllers
         }
 
         [HttpPost("Enable")]
+        [Authorize]
         public async Task<ActionResult<AppUser>> EnableUser(UserStatusDto userDto)
         {
             var exist = await _context.Users.AnyAsync( x => x.UserName == userDto.UserName.ToLower() );
@@ -82,6 +88,7 @@ namespace API.Controllers
         }
 
         [HttpPost("Disable")]
+        [Authorize]
         public async Task<ActionResult<AppUser>> DisableUser(UserStatusDto userDto)
         {
             var exist = await _context.Users.AnyAsync( x => x.UserName == userDto.UserName.ToLower() );
@@ -94,6 +101,7 @@ namespace API.Controllers
         }
 
         [HttpPost("Delete")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<AppUser>>> DeleteUser(UserStatusDto userDto)
         {
             var exist = await _context.Users.AnyAsync( x => x.UserName == userDto.UserName.ToLower() );
