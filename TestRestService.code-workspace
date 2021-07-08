@@ -1,0 +1,31 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"csharpextensions.privateMemberPrefix": "_",
+		"files.exclude": {
+			"**/bin": true,
+			"**/obj": true
+		},
+		"explorer.compactFolders": true,
+		"csharp.semanticHighlighting.enabled": true,
+		"omnisharp.defaultLaunchSolution": "TestRestService.sln",
+		"csharpextensions.useThisForCtorAssignments": false
+	},
+	"extensions": {
+		"recommendations": [
+				"ms-dotnettools.csharp",
+				"jchannon.csharpextensions",
+				"alexcvzz.vscode-sqlite",
+				"patcx.vscode-nuget-gallery",
+				"zignd.html-css-class-completion",
+				"coenraads.bracket-pair-colorizer-2",
+				"beardedbear.beardedtheme",
+				"pkief.material-icon-them"
+		]
+	}
+}
+
