@@ -18,6 +18,7 @@ namespace API.Controllers
         }
 
         [HttpPost("Login")]
+        [AllowAnonymous]        
         public ActionResult<TokenDto> Login(LoginDto loginDto)
         {
             if (loginDto.UserName != _staticUser || loginDto.Password != _staticPassword )
