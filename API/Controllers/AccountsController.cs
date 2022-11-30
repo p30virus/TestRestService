@@ -37,7 +37,7 @@ namespace API.Controllers
             return Ok(_users);
         }
         
-                [HttpGet("UserV2/{userName}")]
+        [HttpGet("UserV2/{userName}")]
         [Authorize]
         public async Task<ActionResult<UserMembershipDtoV2>> GetUserV2(string userName)
         {
