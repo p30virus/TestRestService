@@ -36,6 +36,45 @@ namespace API.Controllers
             var _users = await _context.Users.FirstOrDefaultAsync( x => x.UserName == userName.ToLower() );
             return Ok(_users);
         }
+        
+                [HttpGet("UserV2/{userName}")]
+        [Authorize]
+        public async Task<ActionResult<UserMembershipDtoV2>> GetUserV2(string userName)
+        {
+            var exist = await _context.Users.AnyAsync( x => x.UserName == userName.ToLower());
+            if (!exist)  return BadRequest("User doesnt Exist");
+            var _users = await _context.Users.FirstOrDefaultAsync( x => x.UserName == userName.ToLower() );
+            var _userReturn = new UserMembershipDtoV2 
+            {
+                Id = _users.Id,
+                UserName = _users.UserName,
+                GivenName = _users.GivenName,
+                sn = _users.sn,
+                cn = _users.cn,
+                EmployeeNumber = _users.EmployeeNumber,
+                Email = _users.Email,
+                Status = _users.Status,
+                Membership = new List<AppGroupMembershipV2>()
+            };
+            var _Membership = new List<AppGroupMembership>();
+            _Membership = await _context.GroupsMembership.Where( x => x.UserName == userName.ToLower()).ToListAsync();
+            if(_Membership != null)
+            {
+                var TmpMembership = new List<AppGroupMembershipV2>();
+                foreach (var item in _Membership)
+                {
+                    var TmpItem = new AppGroupMembershipV2
+                    {
+                        Id = item.Id,
+                        GroupName = item.GroupName
+                    };
+
+                    TmpMembership.Add(TmpItem);
+                }
+                _userReturn.Membership = TmpMembership;
+            }
+            return Ok(_userReturn);
+        }
 
         [HttpPost("Register")]
         [Authorize]
