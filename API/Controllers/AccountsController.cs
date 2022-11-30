@@ -25,6 +25,17 @@ namespace API.Controllers
         {
             return Ok( await _context.Users.ToListAsync());
         }
+        
+        [HttpGet("User/{userName}")]
+        [Authorize]
+        public async Task<ActionResult<IEnumerable<AppUser>>> GetUser(string userName)
+        {
+            var exist = await _context.Users.AnyAsync( x => x.UserName == userName.ToLower());
+            if (!exist)  return BadRequest("User doesnt Exist");
+
+            var _users = await _context.Users.FirstOrDefaultAsync( x => x.UserName == userName.ToLower() );
+            return Ok(_users);
+        }
 
         [HttpPost("Register")]
         [Authorize]
