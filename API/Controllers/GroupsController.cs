@@ -44,6 +44,31 @@ namespace API.Controllers
             return Ok(_userReturn);
         }
 
+        [HttpGet("GroupsMembershipV2/{userName}")]
+        [Authorize]
+        public async Task<ActionResult<UserMembershipDtoV2>> GetGroupsMembershipV2(string userName)
+        {
+            var exist = await _context.Users.AnyAsync( x => x.UserName == userName.ToLower());
+            if (!exist)  return BadRequest("User doesnt Exist");
+            var _users = await _context.Users.FirstOrDefaultAsync( x => x.UserName == userName.ToLower() );
+            var _userReturn = new UserMembershipDtoV2 
+            {
+                Id = _users.Id,
+                UserName = _users.UserName,
+                GivenName = _users.GivenName,
+                sn = _users.sn,
+                cn = _users.cn,
+                EmployeeNumber = _users.EmployeeNumber,
+                Email = _users.Email,
+                Status = _users.Status,
+                Membership = new List<AppGroupMembership>()
+            };
+            var _Membership = new List<AppGroupMembership>();
+            _Membership = await _context.GroupsMembership.Where( x => x.UserName == userName.ToLower()).ToListAsync();
+            if(_Membership != null) _userReturn.Membership = _Membership;
+            return Ok(_userReturn);
+        }
+        
         [HttpPost("AddMembership")]
         [Authorize]
         public async Task<ActionResult<UserMembershipDto>> AddMembership(UserMembershipModifyDto userDto)
