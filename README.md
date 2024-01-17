@@ -11,9 +11,9 @@ dotnet run -debug
 
 ## Try the services
 
-[Swagger SSL](https://localhost:5001/swagger/index.html)https://localhost:5001/swagger/index.html
+[Swagger SSL](https://localhost:5001/swagger/index.html)
 
-[Swagger](http://localhost:5000/swagger/index.html)https://localhost:5000/swagger/index.html
+[Swagger](http://localhost:5000/swagger/index.html)
 
 ## Credentials
 
