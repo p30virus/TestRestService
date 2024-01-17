@@ -23,6 +23,6 @@ namespace API.DTOs
         [Required]
         public int Status { get; set; }
         [Required]
-        public List<AppGroupMembership> Membership { get; set; }
+        public List<AppGroupMembershipV2> Membership { get; set; }
     }
 }
