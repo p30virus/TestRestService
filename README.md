@@ -2,11 +2,13 @@
 
 ## Database
 SQLite
+
 TestRestService.db
 
 ## Execute
 
 cd API/
+
 dotnet run -debug
 
 ## Try the services
